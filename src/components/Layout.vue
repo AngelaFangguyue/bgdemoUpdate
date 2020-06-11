@@ -1,7 +1,7 @@
 <template>
-  <el-container style="height: 100vh; border: 1px solid #eee;">
+   <el-container style="height: 100vh; border: 1px solid #eee;">
     <el-aside width="250px" style="background-color: rgb(238, 241, 246);">
-      <Navi></Navi>
+      <slot/>
     </el-aside>
 
     <el-container>
@@ -27,34 +27,15 @@
   </el-container>
 </template>
 
-<style>
-html body {
-  padding: 0;
-  margin: 0;
-}
-
-.el-header {
-  background-color: #b3c0d1;
-  color: #333;
-  line-height: 60px;
-}
-
-.el-aside {
-  color: #333;
-  height: 100%;
-}
-</style>
-
 <script>
-import Navi from "@/components/Navi.vue";
-import ServeList from "@/components/ServeList.vue";
-import Newbutton from "@/components/Newbutton.vue";
-console.log(Navi);
-console.log(ServeList);
-export default {
-  data() {
-    return {};
-  },
-  components: { ServeList, Navi, Newbutton },
-};
+import { Vue, Component, Prop } from "vue-property-decorator";
+@Component
+export default class Layout extends Vue {
+ 
+
+}
 </script>
+
+<style lang="scss" scoped>
+
+</style>
