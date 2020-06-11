@@ -1,7 +1,7 @@
 <template>
-   <el-container style="height: 100vh; border: 1px solid #eee;">
+  <el-container style="height: 100vh; border: 1px solid #eee;">
     <el-aside width="250px" style="background-color: rgb(238, 241, 246);">
-      <slot/>
+      <slot />
     </el-aside>
 
     <el-container>
@@ -20,7 +20,8 @@
       <!-- 首页内容 -->
       <el-main>
         <!-- <router-view></router-view> -->
-        <ServeList></ServeList>
+        <!-- <ServeList></ServeList> -->
+        <slot name="contentShow"></slot>
       </el-main>
       <Newbutton></Newbutton>
     </el-container>
@@ -29,13 +30,15 @@
 
 <script>
 import { Vue, Component, Prop } from "vue-property-decorator";
-@Component
+import Newbutton from "@/components/Newbutton.vue";
+@Component({
+    components:Newbutton
+})
 export default class Layout extends Vue {
- 
+    
+};
 
-}
 </script>
 
 <style lang="scss" scoped>
-
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <el-container style="height: 100vh; border: 1px solid #eee;">
+  <!-- <el-container style="height: 100vh; border: 1px solid #eee;">
     <el-aside width="250px" style="background-color: rgb(238, 241, 246);">
       <Navi></Navi>
     </el-aside>
@@ -18,13 +18,17 @@
       </el-header>
 
       <!-- 首页内容 -->
-      <el-main>
+      <!-- <el-main> -->
         <!-- <router-view></router-view> -->
-        <ServeList></ServeList>
+        <!-- <ServeList></ServeList>
       </el-main>
       <Newbutton></Newbutton>
     </el-container>
-  </el-container>
+  </el-container> -->
+  <Layout>
+    <Navi></Navi>
+    <ServeList v-slot:contentShow></ServeList>
+  </Layout>
 </template>
 
 <style>
@@ -48,13 +52,14 @@ html body {
 <script>
 import Navi from "@/components/Navi.vue";
 import ServeList from "@/components/ServeList.vue";
-import Newbutton from "@/components/Newbutton.vue";
+
+import Layout from "@//components/Layout.vue"
 console.log(Navi);
 console.log(ServeList);
 export default {
   data() {
     return {};
   },
-  components: { ServeList, Navi, Newbutton },
+  components: { ServeList, Navi,  Layout },
 };
 </script>
