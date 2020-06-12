@@ -1,65 +1,54 @@
 <template>
-  <!-- <el-container style="height: 100vh; border: 1px solid #eee;">
-    <el-aside width="250px" style="background-color: rgb(238, 241, 246);">
+  <div>
+    <!-- <TestP>
+    </TestP>-->
+    <!-- <Layout>
       <Navi></Navi>
-    </el-aside>
-
-    <el-container>
-      <el-header style="text-align: right; font-size: 12px;">
-        <el-dropdown>
-          <i class="el-icon-setting" style="margin-right: 15px;"></i>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>查看</el-dropdown-item>
-            <el-dropdown-item>新增</el-dropdown-item>
-            <el-dropdown-item>删除</el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
-        <span>ayang818</span>
-      </el-header>
-
-      <!-- 首页内容 -->
-      <!-- <el-main> -->
-        <!-- <router-view></router-view> -->
-        <!-- <ServeList></ServeList>
-      </el-main>
-      <Newbutton></Newbutton>
-    </el-container>
-  </el-container> -->
-  <Layout>
-    <Navi></Navi>
-    <ServeList v-slot:contentShow></ServeList>
-  </Layout>
+      <template slot="contentShow">
+        <ServeList></ServeList>
+      </template>
+    </Layout>-->
+    <!-- <Login></Login> -->
+    <Home class="home"></Home>
+    <div id="app">
+      <!-- <router-view></router-view>-->1111111 
+    </div>
+    <div>
+      <Schedule></Schedule>
+    </div>
+  </div>
 </template>
+<script>
+import Login from "@/views/Login.vue";
+import Home from "@/views/Home.vue";
+import Schedule from "@/components/Schedule.vue";
+// import Navi from "@/components/Navi.vue";
+// import ServeList from "@/components/ServeList.vue";
+// import Layout from "@/components/Layout.vue";
+// import TestC from "@/components/TestC.vue";
+//import TestP from "@/components/TestP.vue";
+// console.log(Navi);
+// console.log(ServeList);
+import { Vue, Component } from "vue-property-decorator";
 
+@Component({ components: { Login, Home, Schedule } })
+export default class App extends Vue {}
+</script>
+
+
+<style scoped>
+</style>
 <style>
-html body {
-  padding: 0;
+* {
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
-
-.el-header {
-  background-color: #b3c0d1;
-  color: #333;
-  line-height: 60px;
+a {
+  text-decoration: none;
 }
-
-.el-aside {
-  color: #333;
-  height: 100%;
+ul,
+ol {
+  list-style: none;
 }
 </style>
-
-<script>
-import Navi from "@/components/Navi.vue";
-import ServeList from "@/components/ServeList.vue";
-
-import Layout from "@//components/Layout.vue"
-console.log(Navi);
-console.log(ServeList);
-export default {
-  data() {
-    return {};
-  },
-  components: { ServeList, Navi,  Layout },
-};
-</script>

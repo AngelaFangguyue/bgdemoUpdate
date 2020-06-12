@@ -1,15 +1,79 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-//import CreateArticle from './views/CreateArticle.vue'
-//import ListArticle from "./views/ListArticle.vue"
-//import ModifyAriticle from "./views/ModifyAriticle.vue"
-Vue.use(Router)
+import Vue from "vue";
+import Router from "vue-router";
+
+import App from "@/App.vue";
+import Login from "@/views/Login.vue";
+import Home from "@/views/Home.vue";
+
+Vue.use(Router);
+
+//**** */
+// const User = {
+//   template: `
+//   <div class="user">
+//     <h2>User {{ $route.params.id }}</h2>
+//     <router-view></router-view>
+//   </div>
+// 
+// }
+// // const router = new Router({
+// //   routes: [
+// //     { path: '/user/:id', component: User }
+// //   ]
+// // })
+// const router = new Router({
+//   routes: [
+//     { path: '/user/:id', component: User,
+//       children: [
+//         {
+//           // 当 /user/:id/profile 匹配成功，
+//           // UserProfile 会被渲染在 User 的 <router-view> 中
+//           path: 'profile',
+//           component: UserProfile
+//         },
+//         {
+//           // 当 /user/:id/posts 匹配成功
+//           // UserPosts 会被渲染在 User 的 <router-view> 中
+//           path: 'posts',
+//           component: UserPosts
+//         },
+//         {
+//           // 当匹配不成功，比如说/user/foo的时候，就会进入这里
+//           // UserPosts 会被渲染在 User 的 <router-view> 中
+//           path: '',
+//           component: UserHome
+//         }
+//       ]
+//     }
+//   ]
+// })
+//**** */
 
 // 配置路由信息
 // 每个路由应该映射一个组件。 其中"component" 可以是
 // 通过 Vue.extend() 创建的组件构造器，
 // 或者，只是一个组件配置对象。
 const routes = [
+  {
+    path: "/", // 父路由路径
+    component: App, // 父路由组件，传入 vue component
+    name: "App", // 路由名称
+    // 设置子路由
+    children: [
+      {
+        path: "login", // 子路由路径
+        component: Login, // 子路由组件，会替换父组件中<router-view>中的内容
+        name: "Login", // 路由名称
+      },
+      {
+        // 应用首页
+        path: "home",
+        component: Home,
+        name: "Home",
+      },
+    ],
+  },
+
   // {
   //   path: "/", // 父路由路径
   //   component: App, // 父路由组件，传入 vue component
@@ -53,5 +117,5 @@ const routes = [
 ];
 
 export default new Router({
-  routes
-})
+  routes,
+});

@@ -1,7 +1,7 @@
 <template>
   <el-row>
-    <el-button type="primary" @click.native="addNew">主要按钮</el-button>
-    <el-button type="danger" @click.native="deleteItem">危险按钮</el-button>
+    <el-button type="primary" @click.native="addNew">新增</el-button>
+    <el-button type="danger" @click.native="del">删除</el-button>
   </el-row>
 </template>
 
@@ -9,9 +9,11 @@
 import { Vue, Component, Prop } from "vue-property-decorator";
 @Component
 export default class Newbutton extends Vue {
-  @Prop(String) addNew;
-  @Prop(String) deleteItem;
+  @Prop() addNew;
+  @Prop() del;
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+
+</style>

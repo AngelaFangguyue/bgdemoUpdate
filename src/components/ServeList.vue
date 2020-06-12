@@ -44,9 +44,7 @@ import { menus ,tableData } from "@/utils/globalData.js";
 console.log(menus,tableData);
 import { createdListId } from "@/library/createId.js";
 //console.log(createdListId);
-import { Vue, Component, Prop } from "vue-property-decorator";
 
-@Component
 export default class ServeList extends Vue {
   
   tableData = tableData; //绑定数据
