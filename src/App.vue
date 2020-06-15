@@ -1,27 +1,19 @@
 <template>
-  <div>
-    <!-- <TestP>
-    </TestP>-->
-    <!-- <Layout>
-      <Navi></Navi>
-      <template slot="contentShow">
-        <ServeList></ServeList>
-      </template>
-    </Layout>-->
-    <!-- <Login></Login> -->
-    <Home class="home"></Home>
-    <div id="app">
-      <!-- <router-view></router-view>-->1111111 
-    </div>
-    <div>
-      <Schedule></Schedule>
-    </div>
-  </div>
+ 
+      <router-view></router-view>
+ 
 </template>
+
+
+
+
 <script>
 import Login from "@/views/Login.vue";
 import Home from "@/views/Home.vue";
 import Schedule from "@/components/Schedule.vue";
+
+import Layout from "@/components/Layout.vue";
+import Navi from "@/components/Navi.vue";
 // import Navi from "@/components/Navi.vue";
 // import ServeList from "@/components/ServeList.vue";
 // import Layout from "@/components/Layout.vue";
@@ -31,8 +23,12 @@ import Schedule from "@/components/Schedule.vue";
 // console.log(ServeList);
 import { Vue, Component } from "vue-property-decorator";
 
-@Component({ components: { Login, Home, Schedule } })
-export default class App extends Vue {}
+@Component({ components: { Login, Home, Schedule, Layout, Navi } })
+export default class App extends Vue {
+  test() {
+    console.log("test");
+  }
+}
 </script>
 
 

@@ -4,6 +4,12 @@ import Router from "vue-router";
 import App from "@/App.vue";
 import Login from "@/views/Login.vue";
 import Home from "@/views/Home.vue";
+import Product from "@/views/Product.vue";
+import Serve from "@/views/Serve.vue";
+//import Wrapp from "@/views/Wrapp.vue";
+import Dialog from "@/views/Dialog.vue";
+import AddFormDiv from "@/components/AddFormDiv.vue";
+import ServeList from "@/components/ServeList.vue";
 
 Vue.use(Router);
 
@@ -14,7 +20,7 @@ Vue.use(Router);
 //     <h2>User {{ $route.params.id }}</h2>
 //     <router-view></router-view>
 //   </div>
-// 
+//
 // }
 // // const router = new Router({
 // //   routes: [
@@ -58,6 +64,11 @@ const routes = [
     path: "/", // 父路由路径
     component: App, // 父路由组件，传入 vue component
     name: "App", // 路由名称
+    redirect: "/login", //默认第一次进入登录界面
+    ///////////////////
+    //path: "/", // 父路由路径
+    //component: App, // 父路由组件，传入 vue component
+    //name: "App", // 路由名称
     // 设置子路由
     children: [
       {
@@ -70,6 +81,42 @@ const routes = [
         path: "home",
         component: Home,
         name: "Home",
+        children: [
+          {
+            path: "product", // 子路由路径
+            component: Product, // 子路由组件，会替换父组件中<router-view>中的内容
+            name: "Product", // 路由名称
+            children: [
+              {
+                path: "productAdd", // 子路由路径
+                component: AddFormDiv, // 子路由组件，会替换父组件中<router-view>中的内容
+                name: "ProductAdd", // 路由名称
+              },
+              {
+                path: "productList", // 子路由路径
+                component: ServeList, // 子路由组件，会替换父组件中<router-view>中的内容
+                name: "ProductList", // 路由名称
+              },
+            ],
+          },
+          {
+            path: "serve", // 子路由路径
+            component: Serve, // 子路由组件，会替换父组件中<router-view>中的内容
+            name: "Serve", // 路由名称
+            children: [
+              {
+                path: "serveList", // 子路由路径
+                component: ServeList, // 子路由组件，会替换父组件中<router-view>中的内容
+                name: "ServeList", // 路由名称
+              },
+            ],
+          },
+          {
+            path: "dialog", // 子路由路径
+            component: Dialog, // 子路由组件，会替换父组件中<router-view>中的内容
+            name: "Dialog", // 路由名称
+          },
+        ],
       },
     ],
   },

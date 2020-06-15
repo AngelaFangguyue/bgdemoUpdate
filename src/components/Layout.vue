@@ -20,6 +20,8 @@
       <!-- 首页内容 -->
       <el-main>
         <slot></slot>
+        <!-- <div>这是layout组件，设置路由</div> -->
+        <!-- <router-view></router-view> -->
         <!-- <slot name="Newbutton"></slot> -->
         <!-- <Newbutton @click="showAddForm"></Newbutton> 这个先用上面的slot去占位-->
         <!-- <router-view></router-view> -->
@@ -51,10 +53,10 @@ export default class Layout extends Vue {
 // .addForm ::deep div{
 //   display: none
 // }
-.el-aside{
+.el-aside {
   height: 100vh;
 }
-.el-header{
+.el-header {
   height: 60px;
   background-color: rgb(237, 237, 237);
 }

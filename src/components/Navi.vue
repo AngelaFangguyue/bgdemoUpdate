@@ -23,21 +23,28 @@
           <span slot="title">{{ menu.text }}</span>
         </template>
         <el-menu-item-group>
-          <!-- 子菜单也要遍历，同时绑上子菜单名称 text，也要绑个序号 index -->
-          <el-menu-item
+          <router-link
             v-for="subMenu in menu.subMenus"
             :key="subMenu.index"
             :index="subMenu.index"
-          >{{ subMenu.text }}</el-menu-item>
+            :to="`/${subMenu.path}`"
+          >
+            <el-menu-item>{{ subMenu.text }}</el-menu-item>
+          </router-link>
         </el-menu-item-group>
       </el-submenu>
       <!-- 没子菜单的时候，就用 el-menu-item，也要绑个序号 index -->
-      <el-menu-item v-else :index="menu.index" :key="menu.index">
-        <!-- 绑个父菜单的 icon -->
-        <i :class="menu.icon"></i>
-        <!-- 再绑个父菜单的名称 text -->
-        <span slot="title">{{ menu.text }}</span>
-      </el-menu-item>
+
+      <router-link v-else :key="menu.index" :index="menu.index" :to="`/home/${menu.routerName}`">
+        <el-menu-item :index="menu.index" :key="menu.index">
+          <!--<router-link to=""> -->
+          <!-- 绑个父菜单的 icon -->
+          <i :class="menu.icon"></i>
+          <!-- 再绑个父菜单的名称 text -->
+          <span slot="title">{{ menu.text }}</span>
+          <!-- </router-link> -->
+        </el-menu-item>
+      </router-link>
     </template>
   </el-menu>
 </template>
@@ -60,12 +67,15 @@ export default class Navi extends Vue {
   handleClose(key, keyPath) {
     console.log(key, keyPath);
   }
+
+  // test(){
+  //   console.log("test", menu.routername);
+  // }
 }
 </script>
 
 <style lang="scss" scoped>
-.el-menu{
+.el-menu {
   height: 100vh;
- 
 }
 </style>

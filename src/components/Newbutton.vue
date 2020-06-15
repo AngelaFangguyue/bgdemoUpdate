@@ -1,7 +1,7 @@
 <template>
   <el-row>
-    <el-button type="primary" @click.native="addNew">新增</el-button>
-    <el-button type="danger" @click.native="del">删除</el-button>
+    <el-button type="primary" @click.native="$emit('addNew',$event)">新增</el-button>
+    <el-button type="danger" @click.native="$emit('removeOld',$event)">删除</el-button>
   </el-row>
 </template>
 
@@ -9,8 +9,8 @@
 import { Vue, Component, Prop } from "vue-property-decorator";
 @Component
 export default class Newbutton extends Vue {
-  @Prop() addNew;
-  @Prop() del;
+  //@Prop() addNew;
+  //@Prop() del;
 }
 </script>
 

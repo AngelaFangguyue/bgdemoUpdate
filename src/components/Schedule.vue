@@ -3,9 +3,10 @@
   <div class="container">
     <div class="row">
       <div class="col-md-6 offset-md-3">
-       <ToDoList :items="items">
+        <ToDoList :items="items">
           <template v-slot:todo-item-after=" {item} ">
             <i v-if="isFinished(item)" class="fas fa-check" />
+            <span v-if="isFinished(item)">显示</span>
           </template>
         </ToDoList>
       </div>
@@ -14,7 +15,7 @@
 </template>
 <script>
 import ToDoList from "@/components/ToDoList";
-import _ from "lodash";
+//import _ from "lodash";
 export default {
   components: { ToDoList },
   data() {
@@ -28,16 +29,21 @@ export default {
       finished: [4, 2]
     };
   },
- 
-    methods: {
+
+  methods: {
     isFinished(item) {
       //return _.includes(this.finished, item.id)
 
-      if(this.finished.indexOf(item.id)>-1){
-          console.log("cunzai");
+      if (this.finished.indexOf(item.id) > -1) {
+        console.log("cunzai");
+        return true;
       }
+      else{
+        console.log("bucunzai");
+        return false;
+      }
+
     }
   }
-  
 };
 </script>
