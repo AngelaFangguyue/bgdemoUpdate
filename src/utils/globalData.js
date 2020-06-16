@@ -49,7 +49,7 @@ let tableItem = {
 };
 // 此处先以 tableItem 为数据源，拷贝生成 20 个数据，然后再根据索引 index 添加上 id
 
-const tableData = Array(20)
+let tableData = Array(20)
   .fill(tableItem)
   .map((x, i) => {
     return { id: i + 1, ...x };

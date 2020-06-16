@@ -60,4 +60,7 @@ export default class Layout extends Vue {
   height: 60px;
   background-color: rgb(237, 237, 237);
 }
+.el-main{
+  background-color: rgb(254,254,254);
+}
 </style>

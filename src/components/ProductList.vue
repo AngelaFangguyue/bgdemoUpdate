@@ -1,0 +1,35 @@
+<template>
+  <div>
+    列表
+    <!-- <AddForm :dialogFormVisible="isShow"></AddForm> -->
+    <Newbutton :addNew="addNew" :del="del"></Newbutton>
+    <ListMain :tableData="tableData"></ListMain>
+  </div>
+</template>
+
+<script>
+import { Vue, Component } from "vue-property-decorator";
+import { tableData } from "@/utils/globalData.js";
+import Newbutton from "@/components/Newbutton";
+import ListMain from "@/components/ListMain";
+
+@Component({ components: { Newbutton, ListMain } })
+export default class ProductList extends Vue {
+  tableData = tableData;
+  addNew() {
+    console.log("跳转到增加产品的页面");
+    this.$router.replace({ name: "ProductAdd" });
+  }
+  del() {
+    console.log("点击删除按键");
+    
+  }
+  created(){
+    this.tableData = tableData;
+    console.log("tableData",tableData);
+  }
+}
+</script>
+
+<style scoped>
+</style>

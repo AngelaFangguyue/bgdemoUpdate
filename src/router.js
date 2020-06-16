@@ -6,10 +6,10 @@ import Login from "@/views/Login.vue";
 import Home from "@/views/Home.vue";
 import Product from "@/views/Product.vue";
 import Serve from "@/views/Serve.vue";
-//import Wrapp from "@/views/Wrapp.vue";
 import Dialog from "@/views/Dialog.vue";
 import AddFormDiv from "@/components/AddFormDiv.vue";
 import ServeList from "@/components/ServeList.vue";
+import ProductList from "@/components/ProductList.vue";
 
 Vue.use(Router);
 
@@ -94,7 +94,7 @@ const routes = [
               },
               {
                 path: "productList", // 子路由路径
-                component: ServeList, // 子路由组件，会替换父组件中<router-view>中的内容
+                component: ProductList, // 子路由组件，会替换父组件中<router-view>中的内容
                 name: "ProductList", // 路由名称
               },
             ],
