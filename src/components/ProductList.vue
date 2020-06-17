@@ -3,7 +3,7 @@
     列表
     <!-- <AddForm :dialogFormVisible="isShow"></AddForm> -->
     <Newbutton :addNew="addNew" :del="del"></Newbutton>
-    <ListMain :tableData="tableData"></ListMain>
+    <ListMain :tableData="tableData" :showOr="showOr"></ListMain>
   </div>
 </template>
 
@@ -16,13 +16,15 @@ import ListMain from "@/components/ListMain";
 @Component({ components: { Newbutton, ListMain } })
 export default class ProductList extends Vue {
   tableData = tableData;
+  showOr = false;
   addNew() {
     console.log("跳转到增加产品的页面");
     this.$router.replace({ name: "ProductAdd" });
   }
   del() {
-    console.log("点击删除按键");
-    
+    this.showOr = true;
+    console.log("点击删除按键:",this.showOr);
+
   }
   created(){
     this.tableData = tableData;

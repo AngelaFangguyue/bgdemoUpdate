@@ -4,8 +4,39 @@
       stripe
       :data="tableData"
       style="border: 1px solid #ebebeb;border-radius: 3px;margin-top: 10px;"
+      @select="testSelect($event)"
+      highlight-current-row
+      @current-change="handleCurrentChange"
     >
-      <el-table-column prop="id" label="id" width="100" type="selection"> </el-table-column>
+      <el-table-column
+        width="100"
+        type="selection"
+        v-if="showOr"
+        :selectable="isDisabled"
+      ><!--复选框禁用功能-->
+        <!-- <template slot-scope="scope">
+          <el-checkbox @change="test(scope,$event)"></el-checkbox>
+          <span style="margin-left: 10px">{{ scope.row.id }}</span>
+        </template> -->
+        <!-- <template slot="header" slot-scope="scope">
+          id编号
+        </template> -->
+      </el-table-column>
+
+      <!-- <el-table-column prop="id" label="id" width="100" > -->
+      <!-- <el-table-column type="selection" width="55"> </el-table-column> -->
+      <el-table-column width="100" label="id">
+        <!-- <template slot="header" slot-scope="scope">
+          id编号
+        </template> -->
+        <template slot-scope="scope">
+          <el-checkbox
+            @change="test(scope, $event)"
+            class="checkbox1"
+          ></el-checkbox>
+          <span style="margin-left: 10px">{{ scope.row.id }}</span>
+        </template>
+      </el-table-column>
 
       <el-table-column prop="date" label="日期" width="200"></el-table-column>
 
@@ -47,6 +78,30 @@ import { Vue, Component, Prop } from "vue-property-decorator";
 @Component
 export default class ListMain extends Vue {
   @Prop() tableData;
+  @Prop() showOr;
+
+  //多选部分禁用功能
+  isDisabled(row) {
+    if (row.experience_status === "1") {
+      return 0;
+    }
+    return 1;
+  }
+
+  currentRow = null;
+
+  test(i, j) {
+    console.log("hihihi>>", i, j);
+  }
+  testSelect(i) {
+    console.log("testSelect:::");
+    console.log("testSelect:::", i);
+    //add class样式，使得后面对应的按钮禁用
+  }
+  handleCurrentChange(val) {
+    this.currentRow = val;
+    console.log("单选时的值：", this.currentRow);
+  }
 
   //   // 新增一个数据
   //   addTableItem(item = {}) {
@@ -96,4 +151,8 @@ export default class ListMain extends Vue {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.el-checkbox {
+  margin-right: 0;
+}
+</style>
