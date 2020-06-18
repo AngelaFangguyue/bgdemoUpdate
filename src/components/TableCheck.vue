@@ -1,5 +1,11 @@
 <template>
   <div>
+    <Newbutton
+      :del="del"
+      :del1="del1"
+      :showDel="showDel"
+      :addNew1="addNew1"
+    ></Newbutton>
     <p>shopInfo</p>
     <el-table
       ref="multipleTable"
@@ -7,20 +13,24 @@
       tooltip-effect="dark"
       highlight-current-row
       style="width: 100%"
-      @current-change="handleSelectionChange"
-      @select="checkboxSelect"
     >
-      <el-table-column type="selection"></el-table-column>
+      <!-- @current-change="handleSelectionChange" -->
+      <!-- <el-table-column type="selection"></el-table-column> -->
 
       <el-table-column label="操作" width="55">
         <template slot-scope="scope">
-          <el-checkbox v-model="scope.row.checked"></el-checkbox>
+          <el-checkbox
+            v-model="scope.row.checked"
+            :label="scope.row.id"
+            @change="ee($event, scope.row)"
+          ></el-checkbox
+          ><!--当-->
           <!-- <el-radio v-model="checked" :label="scope.row.id" @change = "testChange"></el-radio> -->
           <!-- <el-radio v-model="checked"></el-radio>  -->
           <!-- <el-radio v-model="checked" :label="scope.row.id"></el-radio> -->
         </template>
       </el-table-column>
-
+      <el-table-column prop="id" label="id222" width="120"> </el-table-column>
       <el-table-column label="日期" width="120">
         <template slot-scope="scope">{{ scope.row.date }}</template>
       </el-table-column>
@@ -32,64 +42,129 @@
           anniu1
         </template>
         <template slot-scope="scope">
-          <el-button :disabled="scope.row.id === checked" @click="ee"
+          <!-- <el-button :disabled="scope.row.id === checked" @click="ee"
             >{{ scope.row.id }}单选框编辑</el-button
-          >
+          > -->
 
-          <el-button
+          <!-- <el-button
             :disabled="checkedList.indexOf(scope.row.id) > -1"
             @click="ee"
+            >{{ scope.row.id }}多选框编辑</el-button
+          > -->
+          <el-button :disabled="!showDel" @click="ee1"
             >{{ scope.row.id }}多选框编辑</el-button
           >
         </template>
       </el-table-column>
     </el-table>
-    <!-- <el-radio v-model="radio1" label="1">备选项</el-radio>
-    <el-radio v-model="radio" label="2">备选项</el-radio> -->
   </div>
 </template>
 
 <script>
 import { Vue, Component, Ref } from "vue-property-decorator";
+import Newbutton from "@/components/Newbutton";
 
-@Component
+@Component({ components: { Newbutton } })
 export default class TableCheck extends Vue {
-  // @Ref() anotherComponent!: AnotherComponent
-  @Ref() multipleTable;
-  //使用table中内置的方法
-  // this.$refs.multipleTable.toggleRowSelection(this.data[2])
-  checkboxSelect(i) {
-    console.log("checkbox:", i);
-    //console.log(i.map(x=>x.id));
-    this.checkedList = i.map((x) => x.id);
+  //将for循环提取出来[3,4,5][{id:1,age:11},{id:2,age:12},{id:3,age:13},{id:4,age:14}]
+  forfun(a, b, c) {
+    for (let i1 = 0; i1 < b.length; i1++) {
+      //b=this.checkedList
+      for (let i2 = 0; i2 < c.length; i2++) {
+        //c=this.tableData3
+        if (c[i2].id === b[i1]) {
+          a(c, i2);
+        }
+      }
+    }
+    console.log("a:", a);
+    console.log("b:", b);
+    console.log("c:", c);
   }
-  // radio = "1111";
-  // radio1 = "1111";
+  aa(xx, i2) {
+    console.log("这是aa函数");
+    xx[i2].checked = false;
+  }
+  //删除
+  bb(xx, i2) {
+    console.log("这是bb函数");
+    xx.splice(i2, 1);
+  }
+
+  ///////////////////////////////////////////
+
+  ee1() {
+    // console.log("点击编辑按钮");
+  }
+
+  showDel = true; //控制是哪一排的按钮显示
+
+  //确认取消，需要拿到选中的，然后删除
+  addNew1() {
+    this.forfun(this.bb, this.checkedList, this.tableData3);
+  }
+
+  del() {
+    this.showDel = false;
+    // console.log("this.showDel:", this.showDel);
+  }
+  del1() {
+    this.showDel = true;
+    console.log("this.showDel1:", this.showDel);
+    console.log("this.checkedList:", this.checkedList);
+    //
+    // for (let i1 = 0; i1 < this.tableData3.length; i1++) {
+    //      console.log("this.tableData3[i1]:",this.tableData3[i1]);
+    //   for (let i2 = 0; i2 < this.checkedList.length; i2++) {
+    //     if (this.tableData3[i1].id === this.checkedList[i2]) {
+    //         console.log("this.checkedList[i2]:",this.checkedList[i2]);
+    //       this.tableData3[i1].checked = false;
+    //     }
+    //   }
+    // }
+    this.forfun(this.aa, this.checkedList, this.tableData3);
+    console.log("this.tableData3:", this.tableData3);
+  }
+
+  @Ref() multipleTable;
+
   tableData3 = [];
   checked = null;
   currentSelectItem = {};
 
-  //
   checkedList = [];
 
-  ee() {
-    // this.$nextTick(() => {
-    //   this.multipleTable.toggleAllSelection();
-    // });
+  handleSelectionChange(row) {
+    this.checked = row.id;
+    this.tableData3.forEach((item) => {
+      if (item.id !== this.checked) {
+        // item.checked = false;
+      }
+    });
+    this.currentSelectItem = row;
+    //console.log("this.currentSelectItem:", this.currentSelectItem);
+    //console.log("this.checked:", this.checked);
+  }
+
+  ee(i, j) {
+    //console.log("i,j:", i, j);
+    //console.log("ii:", this.tableData3);
+    //i为true和false
+    if (i) {
+      // console.log("被选中的:", j.id);
+      //this.selectedItem.push();
+      this.checkedList.push(j.id);
+      console.log("被选中的this.checkedList:", this.checkedList);
+    } else {
+      //取消选中的
+      // console.log("取消选中的");
+      this.checkedList.splice(this.checkedList.indexOf(j.id), 1);
+      console.log("被选中的this.checkedList:", this.checkedList);
+    }
   }
 
   created() {
     this.setTable();
-  }
-  mounted() {
-    //console.log("this.multipleTable", this.multipleTable);
-    //this.multipleTable.toggleRowSelection(this.tableData3[0], true);
-    // 回调 nextTick 数据改变后重绘页面
-    // this.$nextTick(() => {
-    //   this.multipleTable.toggleRowSelection(this.tableData3[0], true);
-    // // });
-    // this.multipleTable.toggleAllSelection();
-    //this.multipleTable.setCurrentRow(this.tableData3[2]); //单选这样写可以
   }
 
   setTable() {
@@ -121,57 +196,11 @@ export default class TableCheck extends Vue {
       },
     ];
 
-    // 使用单选框，下面的就不需要了
-    // resdata.forEach((item) => {
-    //   item.checked = false;
-    // });
-
-    //这里使用复选框
     resdata.forEach((item) => {
       item.checked = false;
     });
     this.tableData3 = resdata;
   }
-
-  handleSelectionChange(row) {
-    /////////////////////////////使用单选框，下面的操作就不用
-    // console.log("row.id:", row.id);
-    // this.checked = row.id; //加上了这句话之后，点击任何地方，单选框也会被选中，但单选框中的change事件不会触发了
-    // this.tableData3.forEach((item) => {
-    //   //
-    //   if (item.id !== row.id) {
-    //     item.checked = false;
-    //   }
-    //   //   else{
-    //   //       this.checked = row.id;
-    //   //   }
-    // });
-    // console.log(row);
-    ///////////////////////////
-
-    this.checked = row.id;
-    // this.currentSelectItem = row;
-    //  this.tableData3.forEach((item) => {
-    //   if (item.id === this.checked) {
-    //     row.status = -1;
-    //   } else {
-    //     row.status =  1;
-    //   }
-    // });
-
-     this.tableData3.forEach((item) => {
-      if (item.id !== this.checked) {
-        //row.status = -1;
-      } 
-    });
-    this.currentSelectItem = row;
-    console.log("this.currentSelectItem:", this.currentSelectItem);
-    console.log("this.checked:", this.checked);
-  }
-
-  //   testChange(i){//点击单选按钮，既会触发current-change事件，也会触发单选框的change事件，但若点击其他地方，不会触发change事件，只会触发current-change事件
-  //     console.log("change事件：",i);//
-  // }
 }
 </script>
 

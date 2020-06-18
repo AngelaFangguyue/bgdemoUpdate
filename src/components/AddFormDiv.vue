@@ -42,6 +42,7 @@
         type="primary"
         @click.native="
           addTableItem(form);
+
         "
         >确 定</el-button
       >

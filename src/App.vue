@@ -40,4 +40,9 @@ ul,
 ol {
   list-style: none;
 }
+.clearfix::after{
+  content:"";
+  display: block;
+  clear: both;
+}
 </style>
