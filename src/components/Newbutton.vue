@@ -20,19 +20,10 @@ export default class Newbutton extends Vue {
   @Prop() addNew1;
   @Prop() del1;
   @Prop({ default: true }) showDel;
-  @Prop() classPerfix;
-
-
-  updated() {
-   // console.log("this.showDel:", this.showDel);
-  }
 }
 </script>
 
 <style lang="scss" scoped>
-// .but1{
-//   z-index: 2;//这个按钮要优先显示
-// }
 .buttonWrap{
     position: relative;
      padding:30px; //因为子元素绝对定位，脱离文档流，因此需要占据一定高度

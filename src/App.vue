@@ -1,6 +1,6 @@
 <template>
-  <!-- <router-view></router-view> -->
-  <TableCheck></TableCheck>
+  <router-view></router-view>
+  <!-- <TableCheck></TableCheck> -->
 </template>
 
 <script>
@@ -40,8 +40,8 @@ ul,
 ol {
   list-style: none;
 }
-.clearfix::after{
-  content:"";
+.clearfix::after {
+  content: "";
   display: block;
   clear: both;
 }

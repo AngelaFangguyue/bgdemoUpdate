@@ -1,19 +1,48 @@
 <template>
   <div>
+    <el-table-column label="操作" width="55">
+      <template slot-scope="scope">
+        <el-checkbox
+          v-model="scope.row.checked"
+          :label="scope.row.id"
+          @change="ee($event, scope.row)"
+        ></el-checkbox
+        ><!--当-->
+        <!-- <el-radio v-model="checked" :label="scope.row.id" @change = "testChange"></el-radio> -->
+        <!-- <el-radio v-model="checked"></el-radio>  -->
+        <!-- <el-radio v-model="checked" :label="scope.row.id"></el-radio> -->
+      </template>
+    </el-table-column>
     <el-table
       stripe
       :data="tableData"
       style="border: 1px solid #ebebeb;border-radius: 3px;margin-top: 10px;"
       @select="testSelect($event)"
       highlight-current-row
-      @current-change="handleCurrentChange"
     >
+      <!--当-->
+      <el-table-column label="操作" width="55">
+        <template slot-scope="scope">
+          <el-checkbox
+            v-model="scope.row.checked"
+            :label="scope.row.id"
+            @change="ee($event, scope.row)"
+          ></el-checkbox
+          ><!--当-->
+          <!-- <el-radio v-model="checked" :label="scope.row.id" @change = "testChange"></el-radio> -->
+          <!-- <el-radio v-model="checked"></el-radio>  -->
+          <!-- <el-radio v-model="checked" :label="scope.row.id"></el-radio> -->
+        </template>
+      </el-table-column>
+      <!--当-->
+
+      <!-- @current-change="handleCurrentChange" -->
       <el-table-column
         width="100"
         type="selection"
         v-if="showOr"
         :selectable="isDisabled"
-      ><!--复选框禁用功能-->
+        ><!--复选框禁用功能-->
         <!-- <template slot-scope="scope">
           <el-checkbox @change="test(scope,$event)"></el-checkbox>
           <span style="margin-left: 10px">{{ scope.row.id }}</span>
@@ -49,21 +78,29 @@
       <el-table-column fixed="right" label="操作" width="300">
         <template slot-scope="scope">
           <el-button
+            :disabled="!showDel"
             @click="editTableItem(scope.row.id)"
             type="info"
             size="small"
             >编辑</el-button
           >
           <el-button
+            :disabled="!showDel"
             @click="deleteTableItem(scope.row.id)"
             type="danger"
             size="small"
             >删除</el-button
           >
-          <el-button @click="moveTableItem(scope.row.id, 'up')" size="small"
+          <el-button
+            :disabled="!showDel"
+            @click="moveTableItem(scope.row.id, 'up')"
+            size="small"
             >上移</el-button
           >
-          <el-button @click="moveTableItem(scope.row.id, 'down')" size="small"
+          <el-button
+            :disabled="!showDel"
+            @click="moveTableItem(scope.row.id, 'down')"
+            size="small"
             >下移</el-button
           >
         </template>
