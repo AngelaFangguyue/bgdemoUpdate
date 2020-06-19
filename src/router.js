@@ -10,7 +10,7 @@ import Dialog from "@/views/Dialog.vue";
 import AddFormDiv from "@/components/AddFormDiv.vue";
 import ServeList from "@/components/ServeList.vue";
 import ProductList from "@/components/ProductList.vue";
-
+//import EditItem from "@/components/EditItem.vue";
 Vue.use(Router);
 
 //**** */
@@ -81,6 +81,7 @@ const routes = [
         path: "home",
         component: Home,
         name: "Home",
+        //redirect: "/home/product/productList",
         children: [
           {
             path: "product", // 子路由路径
@@ -97,6 +98,11 @@ const routes = [
                 component: ProductList, // 子路由组件，会替换父组件中<router-view>中的内容
                 name: "ProductList", // 路由名称
               },
+              {
+                path: "editProduct/:id", // 子路由路径
+                component: AddFormDiv, // 子路由组件，会替换父组件中<router-view>中的内容
+                name: "EditProduct", // 路由名称
+              }
             ],
           },
           {

@@ -1,5 +1,5 @@
 <template>
-  <div  class="buttonWrap">
+  <div class="buttonWrap">
     <el-row v-show="showDel" class="but1">
       <el-button type="primary" @click.native="addNew">新增</el-button>
       <el-button type="danger" @click.native="del">删除</el-button>
@@ -24,13 +24,15 @@ export default class Newbutton extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.buttonWrap{
-    position: relative;
-     padding:30px; //因为子元素绝对定位，脱离文档流，因此需要占据一定高度
+.buttonWrap {
+  position: relative;
+  padding: 30px; //因为子元素绝对定位，脱离文档流，因此需要占据一定高度
+  margin-bottom: 30px;
 }
-.but2,.but1{
-    position: absolute;
-    top:30px;
-    left:30px;
+.but2,
+.but1 {
+  position: absolute;
+  top: 30px;
+  left: 30px;
 }
 </style>

@@ -1,35 +1,13 @@
 <template>
   <div>
-    <!-- ServerList -->
-
     <AddForm :dialogFormVisible="isShow"></AddForm>
-    <ListMain :tableData="tableData"></ListMain>
-
-    <!-- <Newbutton @addNew="addTableItem" @removeOld="deleteTableItem"></Newbutton> -->
-    <!-- <el-table
-      stripe
-      :data="tableData"
-      style="border: 1px solid #ebebeb;border-radius: 3px;margin-top: 10px;"
-    >
-      <el-table-column prop="id" label="id" width="100"></el-table-column>
-
-      <el-table-column prop="date" label="日期" width="200"></el-table-column>
-
-      <el-table-column prop="name" label="姓名" width="200"></el-table-column>
-
-      <el-table-column prop="phone" label="电话" width="200"></el-table-column>
-
-      <el-table-column prop="address" label="地址"></el-table-column>
-
-      <el-table-column fixed="right" label="操作" width="300">
-        <template slot-scope="scope">
-          <el-button @click="deleteTableItem(scope.row.id)" type="danger" size="small">删除</el-button>
-
-          <el-button @click="moveTableItem(scope.row.id, 'up')" size="small">上移</el-button>
-          <el-button @click="moveTableItem(scope.row.id, 'down')" size="small">下移</el-button>
-        </template>
-      </el-table-column>
-    </el-table>-->
+    <ListMain :tableData="tableData" :editItem="editItem"
+      :showOr="showOr"
+      :showDel="showDel"
+      v-on:updateCheckList="updateCheckList"
+      v-on:updateCheckListSingle="updateCheckListSingle"
+      :editTableItem="editTableItem"
+    ></ListMain>
   </div>
 </template>
 
@@ -47,6 +25,8 @@ export default class ServeList extends Vue {
   tableData = tableData; //绑定数据
 
   isShow = false;
+
+  editItem = 1;
 
   /////////////////////////
   // // 新增一个数据

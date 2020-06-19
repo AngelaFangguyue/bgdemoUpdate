@@ -1,18 +1,5 @@
 <template>
   <div>
-    <el-table-column label="操作" width="55">
-      <template slot-scope="scope">
-        <el-checkbox
-          v-model="scope.row.checked"
-          :label="scope.row.id"
-          @change="ee($event, scope.row)"
-        ></el-checkbox
-        ><!--当-->
-        <!-- <el-radio v-model="checked" :label="scope.row.id" @change = "testChange"></el-radio> -->
-        <!-- <el-radio v-model="checked"></el-radio>  -->
-        <!-- <el-radio v-model="checked" :label="scope.row.id"></el-radio> -->
-      </template>
-    </el-table-column>
     <el-table
       stripe
       :data="tableData"
@@ -21,35 +8,26 @@
       highlight-current-row
     >
       <!--当-->
-      <el-table-column label="操作" width="55">
+      <!-- <el-table-column label="操作test" width="55">
         <template slot-scope="scope">
           <el-checkbox
             v-model="scope.row.checked"
             :label="scope.row.id"
             @change="ee($event, scope.row)"
-          ></el-checkbox
-          ><!--当-->
-          <!-- <el-radio v-model="checked" :label="scope.row.id" @change = "testChange"></el-radio> -->
-          <!-- <el-radio v-model="checked"></el-radio>  -->
-          <!-- <el-radio v-model="checked" :label="scope.row.id"></el-radio> -->
+          ></el-checkbox>
         </template>
-      </el-table-column>
+      </el-table-column>-->
       <!--当-->
 
-      <!-- @current-change="handleCurrentChange" -->
-      <el-table-column
-        width="100"
-        type="selection"
-        v-if="showOr"
-        :selectable="isDisabled"
-        ><!--复选框禁用功能-->
+      <el-table-column width="100" type="selection" v-if="showOr" :selectable="isDisabled">
+        <!--复选框禁用功能-->
         <!-- <template slot-scope="scope">
           <el-checkbox @change="test(scope,$event)"></el-checkbox>
           <span style="margin-left: 10px">{{ scope.row.id }}</span>
-        </template> -->
+        </template>-->
         <!-- <template slot="header" slot-scope="scope">
           id编号
-        </template> -->
+        </template>-->
       </el-table-column>
 
       <!-- <el-table-column prop="id" label="id" width="100" > -->
@@ -57,12 +35,9 @@
       <el-table-column width="100" label="id">
         <!-- <template slot="header" slot-scope="scope">
           id编号
-        </template> -->
+        </template>-->
         <template slot-scope="scope">
-          <el-checkbox
-            @change="test(scope, $event)"
-            class="checkbox1"
-          ></el-checkbox>
+          <el-checkbox @change="ee($event, scope.row)" v-if="!showDel"></el-checkbox>
           <span style="margin-left: 10px">{{ scope.row.id }}</span>
         </template>
       </el-table-column>
@@ -82,27 +57,23 @@
             @click="editTableItem(scope.row.id)"
             type="info"
             size="small"
-            >编辑</el-button
-          >
+          >编辑</el-button>
           <el-button
             :disabled="!showDel"
             @click="deleteTableItem(scope.row.id)"
             type="danger"
             size="small"
-            >删除</el-button
-          >
+          >删除</el-button>
           <el-button
             :disabled="!showDel"
-            @click="moveTableItem(scope.row.id, 'up')"
+            @click="moveTableItem(scope.$index,scope.row.id, 'up')"
             size="small"
-            >上移</el-button
-          >
+          >上移</el-button>
           <el-button
             :disabled="!showDel"
-            @click="moveTableItem(scope.row.id, 'down')"
+            @click="moveTableItem(scope.$index,scope.row.id, 'down')"
             size="small"
-            >下移</el-button
-          >
+          >下移</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -114,9 +85,12 @@ import { Vue, Component, Prop } from "vue-property-decorator";
 
 @Component
 export default class ListMain extends Vue {
+  @Prop() editTableItem;
+
   @Prop() tableData;
   @Prop() showOr;
-
+  @Prop() showDel;
+  checkedList = [];
   //多选部分禁用功能
   isDisabled(row) {
     if (row.experience_status === "1") {
@@ -140,6 +114,11 @@ export default class ListMain extends Vue {
     console.log("单选时的值：", this.currentRow);
   }
 
+  // //TODO编辑，
+  // editTableItem(i){
+  //   console.log(i);
+  // }
+
   //   // 新增一个数据
   //   addTableItem(item = {}) {
   //     // EventBus.$emit("addItem");
@@ -150,19 +129,40 @@ export default class ListMain extends Vue {
   //   }
 
   // 删除一个数据
-  //deleteTableItem(id) {
-  deleteTableItem() {
+  deleteTableItem(i) {
     // 查找到对应的索引，然后删除
     console.log("删除记录");
     //const index = this.tableData.findIndex(x => x.id === id);
     //this.tableData.splice(index, 1);
+    this.checkedList.push(i);
+    this.$emit("updateCheckListSingle", this.checkedList);
   }
 
   // 移动一个数据
   // moveTableItem(id, direction) {
-  moveTableItem() {
+  moveTableItem(i, j, k) {
     console.log("移动");
-    //     const dataLength = this.tableData.length;
+    console.log(i, j, k);
+    //const dataLength = this.tableData.length;
+    //const item11 = this.tableData[i];
+    if (k === "up") {
+      if (i > 0) {
+        let upDate = this.tableData[i - 1];
+        this.tableData.splice(i - 1, 1);
+        this.tableData.splice(i, 0, upDate);
+      } else {
+        alert("已经是第一条，不可上移");
+      }
+    } else if (k === "down") {
+      console.log("down");
+      if (i + 1 < this.tableData.length) {
+        let downDate = this.tableData[i + 1];
+        this.tableData.splice(i + 1, 1);
+        this.tableData.splice(i, 0, downDate);
+      } else {
+        alert("已经是最后一条，不可下移");
+      }
+    }
     //     // 查找到对应的索引，然后取出，再插入
     //     const index = this.tableData.findIndex(x => x.id === id);
     //     switch (direction) {
@@ -184,6 +184,18 @@ export default class ListMain extends Vue {
     //         break;
     //     }
     //这里要传出给父组件
+  }
+
+  ///////////////////////
+  ee(i, j) {
+    if (i) {
+      this.checkedList.push(j.id);
+      console.log("被选中的this.checkedList:", this.checkedList);
+    } else {
+      this.checkedList.splice(this.checkedList.indexOf(j.id), 1);
+      console.log("被选中的this.checkedList:", this.checkedList);
+    }
+    this.$emit("updateCheckList", this.checkedList);
   }
 }
 </script>

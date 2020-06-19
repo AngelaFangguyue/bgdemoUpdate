@@ -47,18 +47,18 @@
         >确 定</el-button
       >
     </div>
-    <!-- </el-dialog> -->
   </div>
 </template>
 
 <script>
-import { Vue, Component } from "vue-property-decorator";
+import { Vue, Component, Prop } from "vue-property-decorator";
 import { EventBus } from "@/main.js";
 import {createdListId} from "@/library/createId.js";
 import { tableData } from "@/utils/globalData.js";
 @Component
 export default class AddForm extends Vue {
   //@Prop() isShow;
+  @Prop() formEdit;
   tableData = tableData;
   hide() {
     console.log("触发emit事件");
@@ -66,7 +66,7 @@ export default class AddForm extends Vue {
   }
 
   //dialogFormVisible = true; // 弹窗是否出现
-  form = {}; // 用作表单绑定的内容
+  form = this.formEdit ? this.formEdit : {}; // 用作表单绑定的内容
   formLabelWidth = "120px"; // 表单 label 的宽度
   // onSubmit() {
   //   console.log("submit!");
@@ -105,14 +105,21 @@ export default class AddForm extends Vue {
   //   destroyed(){
   //    EventBus.$off();
   // }
+
+created(){
+  console.log("在producted页面，点击编辑之后跳转到这里：",this.$route.params.id);
+  if(this.$route.params.id!==undefined){
+      for(let i = 0;i<this.tableData.length;i++){
+        if(this.tableData[i].id.toString() === this.$route.params.id.toString()){
+            this.form =  this.tableData[i];
+        }
+      }
+  }
+  //console.log("this.form", this.form);
+}
+
 }
 </script>
 
 <style lang="scss" scoped>
-div.AddFormDivWrapper {
-  // background-color: #fff;
-  // margin:20px;
-  // border:2px solid #333;
-  // box-shadow:-7px -7px 6px #2B2A2A;
-}
 </style>

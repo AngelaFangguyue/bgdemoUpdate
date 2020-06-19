@@ -1,13 +1,15 @@
 <template>
   <div>
-    列表
-    <Newbutton
-      :addNew="addNew"
-      :del="del"
-      :del1="del1"
+    <!-- <router-view></router-view>列表 -->
+    <Newbutton :addNew="addNew" :del="del" :addNew1="addNew1" :del1="del1" :showDel="showDel"></Newbutton>
+    <ListMain
+      :tableData="tableData"
+      :showOr="showOr"
       :showDel="showDel"
-    ></Newbutton>
-    <ListMain :tableData="tableData" :showOr="showOr"></ListMain>
+      v-on:updateCheckList="updateCheckList"
+      v-on:updateCheckListSingle="updateCheckListSingle"
+      :editTableItem="editTableItem"
+    ></ListMain>
   </div>
 </template>
 
@@ -19,21 +21,28 @@ import ListMain from "@/components/ListMain";
 
 @Component({ components: { Newbutton, ListMain } })
 export default class ProductList extends Vue {
+  //编辑，需要把编辑操作传递
+  //TODO编辑，
+  editTableItem(i) {
+    console.log("在ProductList中editTableItem:", i);
+    //this.$router.push({ name: "EditProduct" });
+    this.$router.push({path:`editProduct/${i}`});
+  }
+
   tableData = tableData;
   showOr = false; //控制新增dialog页面的出现
   showDel = true; //控制是哪一排的按钮显示标志
-  del1 = false;
   checkedList = []; //存放选择要删除的数据id
 
-created() {
-   this.tableData = tableData.forEach((item) => {
+  created() {
+    tableData.forEach(item => {
       item.checked = false;
     });
-
+    this.tableData = tableData;
   }
 
-//////////////////////////
-   forfun(a, b, c) {
+  //////////////////////////
+  forfun(a, b, c) {
     for (let i1 = 0; i1 < b.length; i1++) {
       //b=this.checkedList
       for (let i2 = 0; i2 < c.length; i2++) {
@@ -56,24 +65,6 @@ created() {
     console.log("这是bb函数");
     xx.splice(i2, 1);
   }
-////////////////////////////
-
-  ee(i, j) {
-    //console.log("i,j:", i, j);
-    //console.log("ii:", this.tableData3);
-    //i为true和false
-    if (i) {
-      // console.log("被选中的:", j.id);
-      //this.selectedItem.push();
-      this.checkedList.push(j.id);
-      console.log("被选中的this.checkedList:", this.checkedList);
-    } else {
-      //取消选中的
-      // console.log("取消选中的");
-      this.checkedList.splice(this.checkedList.indexOf(j.id), 1);
-      console.log("被选中的this.checkedList:", this.checkedList);
-    }
-  }
 
   addNew() {
     console.log("跳转到增加产品的页面");
@@ -82,13 +73,33 @@ created() {
   del() {
     ////控制是哪一排的按钮显示标志
     // this.showOr = true;
-    // console.log("点击删除按键:",this.showOr);
+    console.log("点击删除按键");
     //this.del1 = true;
     this.showDel = false;
   }
-  created() {
-    this.tableData = tableData;
-    console.log("tableData", tableData);
+  del1() {
+    this.showDel = true;
+    //同时还要把所有选中的取消
+    // this.forfun(this.aa, this.checkedList, this.tableData);
+    console.log("点击取消按键");
+  }
+  addNew1() {
+    this.forfun(this.bb, this.checkedList, this.tableData);
+    console.log("点击确认删除按键:", this.tableData);
+    //
+    this.showDel = true;
+    this.checkedList = [];
+  }
+  //多条删除操作
+  updateCheckList(i) {
+    this.checkedList = i;
+    console.log("显示选中的数据i:", this.checkedList);
+    console.log("显示选中的数据checkedList:", this.checkedList);
+  }
+  //单条删除操作
+  updateCheckListSingle(i) {
+    this.updateCheckList(i);
+    this.addNew1();
   }
 }
 </script>

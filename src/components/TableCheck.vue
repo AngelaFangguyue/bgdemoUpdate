@@ -77,9 +77,6 @@ export default class TableCheck extends Vue {
         }
       }
     }
-    console.log("a:", a);
-    console.log("b:", b);
-    console.log("c:", c);
   }
   aa(xx, i2) {
     console.log("这是aa函数");
@@ -195,7 +192,6 @@ export default class TableCheck extends Vue {
         address: "上海市普陀区金沙江路 1518 弄",
       },
     ];
-
     resdata.forEach((item) => {
       item.checked = false;
     });
